@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.UserMapper">
+     <select id="readUser" parameterType="String" resultType="User">
+          
+           		SELECT  
+					B.MAIL AS username, 
+					A.PWD AS password, 
+					1 as "isEnabled",
+					1 as "isAccountNonLocked",
+					1 as "isAccountNonExpired",
+					1 as "isCredentialsNonExpired"
+				FROM TBL_PEOPLE A JOIN TBL_PPMAIL B 
+				ON A.CD_PEOPLE = B.CD_PEOPLE 
+				WHERE B.MAIL = #{username}
+				
+     </select>
+     
+     <select id="readAuthority" parameterType="String" resultType="String">
+          SELECT role FROM test_authority WHERE username =#{username}
+     </select>
+</mapper>
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<property name="LOG_PATH" value="C:/__DEV/log"/>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_PATH}/aop-%d{yyyy-MM-dd}.%i.txt.zip</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!--  pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern -->
+            <Pattern>%d{yyyy-mm-dd HH:mm:ss.SSS} %-5level - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
+            
+        </layout>
+    </appender>
+    
+    <!-- Loggers -->
+    <logger name="org.springframework.core">
+        <level value="info" />
+    </logger>
+    <logger name="org.springframework.beans">
+        <level value="info" />
+    </logger>
+    <logger name="org.springframework.context">
+        <level value="info" />
+    </logger>
+    <logger name="org.springframework.web">
+        <level value="info" />
+    </logger>
+    
+    <logger name="aop" additivity="false">
+	    <level value="DEBUG" />
+		<appender-ref ref="ROLLING"/>
+    </logger>
+    
+    <!-- logger name="com.example.web">
+        <level value="debug" />
+    </logger>
+    <logger name="java.sql">
+        <level value="debug" />
+    </logger>
+    <logger name="org.mybatis.spring">
+        <level value="debug" />
+    </logger>
+    <logger name="com.example.web.sqlmappers">
+        <level value="trace" />
+    </logger -->
+
+    <root level="info">
+       <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
